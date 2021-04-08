@@ -1,0 +1,22 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "extends": ["airbnb", "airbnb/hooks", "prettier"],
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "prettier/prettier": "error"
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  }
+}
