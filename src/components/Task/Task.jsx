@@ -54,13 +54,4 @@ const Task = () => {
   )
 }
 
-// Task.propTypes = {
-//   task: PropTypes.shape({
-//     id: PropTypes.string.isRequired,
-//     name: PropTypes.string.isRequired,
-//     timeStarted: PropTypes.number.isRequired,
-//     timeEnded: PropTypes.number.isRequired,
-//   }).isRequired,
-// }
-
 export default Task

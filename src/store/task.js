@@ -13,9 +13,10 @@ const timer = createSlice({
       const filteredTasks = state.tasks.filter((task) => task.id !== action.payload)
       return { ...state, tasks: filteredTasks }
     },
+    addGeneratedTasks: (state, action) => ({ ...state, tasks: action.payload }),
   },
 })
 
-export const { addTask, deleteTask } = timer.actions
+export const { addTask, deleteTask, addGeneratedTasks } = timer.actions
 
 export default timer.reducer

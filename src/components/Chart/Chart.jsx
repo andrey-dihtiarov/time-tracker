@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import {
   Bar,
   BarChart,
@@ -9,17 +9,30 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { colors } from '../../constants/colors'
-import { mapTasksForChart } from '../../utils/chartsHelper'
+import { generateNewTasks, mapTasksForChart } from '../../utils/chartsHelper'
+import { addGeneratedTasks } from '../../store/task'
+
+import { Button } from '../Button'
+import { Modal } from '../Modal'
+
+import { Wrapper } from './Chart.styles'
 
 const Chart = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { tasks } = useSelector((state) => state.task)
 
-  useEffect(() => {}, [])
+  const dispatch = useDispatch()
 
   const chartData = useMemo(() => mapTasksForChart(tasks), [tasks])
+
+  const onGenerateClick = () => {
+    const newTasks = generateNewTasks()
+    dispatch(addGeneratedTasks(newTasks))
+    setIsModalOpen(false)
+  }
 
   return (
     <>
@@ -33,6 +46,17 @@ const Chart = () => {
           <Bar dataKey="minutes" name="Minutes in hour" barSize={20} fill={colors.freeSpeechBlue} />
         </BarChart>
       </ResponsiveContainer>
+      <Wrapper>
+        <Button onClick={() => setIsModalOpen(true)}>Generate</Button>
+      </Wrapper>
+      <Modal
+        message="Are you sure you want to generate new tasks? All previous tasks will be erased!"
+        isOpened={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="All previous tasks will be erased"
+        onSuccess={onGenerateClick}
+        showAgreementButton
+      />
     </>
   )
 }

@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { MINUTE, TASK_DURATION, TASKS_AMOUNT } from '../constants/general'
 
 export const getEmptyChartColumns = () => {
   const numberOfHours = 24
@@ -58,4 +59,44 @@ export const mapTasksForChart = (tasks) => {
   })
 
   return newChartData
+}
+
+const getRandomNumber = (min, max) => Math.round(Math.random() * (max - min) + min)
+
+const getRandomTime = () => getRandomNumber(TASK_DURATION.MIN, TASK_DURATION.MAX) * MINUTE
+
+const getRandomTimeAfterPreviousTask = () =>
+  getRandomNumber(TASK_DURATION.MIN, TASK_DURATION.AVERAGE) * MINUTE
+
+export const generateNewTasks = () => {
+  const date = new Date()
+  const amountTasks = getRandomNumber(TASKS_AMOUNT.MIN, TASKS_AMOUNT.MAX)
+  const newTasks = []
+  const dateInMS = Number(new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime())
+
+  const amountTasksArray = Array(amountTasks)
+    .fill('')
+    .map((item, index) => index)
+
+  amountTasksArray.forEach((item) => {
+    const randomTime = getRandomTime()
+    let timeStarted
+    if (!newTasks.length) {
+      timeStarted = dateInMS
+    } else {
+      timeStarted = newTasks[item - 1].timeEnded + getRandomTimeAfterPreviousTask()
+    }
+    const timeEnded = randomTime + timeStarted
+    const name = `Task-${item + 1}`
+    const id = `${name}-${timeStarted}`
+
+    newTasks.push({
+      id,
+      name,
+      timeStarted,
+      timeEnded,
+    })
+  })
+
+  return newTasks
 }
