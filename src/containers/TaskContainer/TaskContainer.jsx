@@ -1,19 +1,29 @@
-import React, { useState } from 'react'
-import { Route, Switch, useHistory } from 'react-router-dom'
+import React, { useMemo, useState } from 'react'
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 import { Tab, Tabs } from '@material-ui/core'
 
 import { colors } from '../../constants/colors'
 import * as ROUTES from '../../constants/routes'
 
-import { Table } from '../../components'
+import { Table, Chart } from '../../components'
 
 import { Wrapper } from './TaskContainer.styles'
 
-const Chart = () => <div>Chart</div>
-
 const TaskContainer = () => {
   const history = useHistory()
-  const [activeTab, setActiveTab] = useState(0)
+  const { pathname } = useLocation()
+
+  const initActiveTab = useMemo(() => {
+    if (pathname === ROUTES.ROUTE_LOG) {
+      return 0
+    }
+    if (pathname === ROUTES.ROUTE_CHART) {
+      return 1
+    }
+    return 0
+  }, [pathname])
+
+  const [activeTab, setActiveTab] = useState(initActiveTab)
 
   const onTabChange = (event, value) => {
     setActiveTab(value)
