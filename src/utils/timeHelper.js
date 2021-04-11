@@ -2,7 +2,7 @@ import moment from 'moment'
 
 /**
  * format time function returns
- * time string in hh:mm:ss format
+ * time string in HH:mm:ss format
  * @param time
  * @param isUTC
  * @returns {string}

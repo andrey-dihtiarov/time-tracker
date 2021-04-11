@@ -3,7 +3,7 @@ import { DialogTitle as MUIDialogTitle, Button as MUIButton } from '@material-ui
 import { colors } from '../../constants/colors'
 
 export const DialogTitle = styled(MUIDialogTitle)`
-  color: ${colors.jazzberryJam};
+  color: ${colors.jazzBerryJam};
   font-weight: bold;
 `
 
@@ -12,5 +12,5 @@ export const CloseButton = styled(MUIButton)`
 `
 
 export const AgreementButton = styled(MUIButton)`
-  color: ${colors.jazzberryJam};
+  color: ${colors.jazzBerryJam};
 `
