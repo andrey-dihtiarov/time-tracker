@@ -3,9 +3,7 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
 import * as ROUTES from '../constants/routes'
 
-import { MainPage } from '../pages'
-import { NotFoundPage } from '../pages/NotFoundPage'
-import { TaskPage } from '../pages/TaskPage'
+import { MainPage, NotFoundPage, TaskPage } from '../pages'
 
 const Routes = () => (
   <BrowserRouter>
