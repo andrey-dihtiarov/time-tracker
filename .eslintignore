@@ -1,3 +1,4 @@
 reportWebVitals.js
 setupTests.js
 App.test.js
+mapTasksForChart.test.js

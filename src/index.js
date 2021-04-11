@@ -6,6 +6,7 @@ import { StylesProvider } from '@material-ui/core/styles'
 import reportWebVitals from './reportWebVitals'
 
 import store from './store/store'
+
 import App from './App/App'
 import GlobalStyle from './globalStyles'
 
