@@ -28,7 +28,7 @@ const Timer = () => {
     [],
   )
 
-  const timer = useMemo(() => formatTime(time), [time])
+  const timer = useMemo(() => formatTime(time, false), [time])
 
   useEffect(() => {
     let tick

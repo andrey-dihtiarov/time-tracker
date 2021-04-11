@@ -65,7 +65,9 @@ const Table = () => {
                 <BodyTableCell>{task.name}</BodyTableCell>
                 <BodyTableCell>{formatTime(task.timeStarted)}</BodyTableCell>
                 <BodyTableCell>{formatTime(task.timeEnded)}</BodyTableCell>
-                <BodyTableCell>{formatTime(task.timeEnded - task.timeStarted)}</BodyTableCell>
+                <BodyTableCell>
+                  {formatTime(task.timeEnded - task.timeStarted, false)}
+                </BodyTableCell>
                 <BodyTableCell>
                   <Button onClick={() => history.push(ROUTE_TASK.replace(':id', index + 1))}>
                     Info

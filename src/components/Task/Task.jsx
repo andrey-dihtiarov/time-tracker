@@ -41,7 +41,7 @@ const Task = () => {
               </Typography>
               <Typography>
                 <Label>Task Total:</Label>
-                <Value>{formatTime(task.timeEnded - task.timeStarted)}</Value>
+                <Value>{formatTime(task.timeEnded - task.timeStarted, false)}</Value>
               </Typography>
             </CardContent>
             <CardActions>

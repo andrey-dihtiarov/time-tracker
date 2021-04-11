@@ -1,13 +1,14 @@
+import moment from 'moment'
+
 /**
  * format time function returns
  * time string in hh:mm:ss format
  * @param time
+ * @param isUTC
  * @returns {string}
  */
-export const formatTime = (time) => {
-  const splittedTimeString = new Date(time).toISOString().split('T')[1]
-  return splittedTimeString.split('.')[0]
-}
+export const formatTime = (time, isUTC = true) =>
+  isUTC ? moment(time).format('HH:mm:ss') : moment.utc(time).format('HH:mm:ss')
 
 /**
  * getCurrentTime function returns
