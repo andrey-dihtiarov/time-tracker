@@ -17,3 +17,11 @@ export const BodyTableCell = styled(TableCell)`
 export const BodyTableRow = styled(TableRow)`
   background-color: ${color.aliceBlue};
 `
+
+export const NoTasks = styled.div`
+  width: 100%;
+  margin: 15px;
+  text-align: center;
+  font-size: 28px;
+  color: ${colors.darkGray};
+`

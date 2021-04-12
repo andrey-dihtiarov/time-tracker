@@ -15,6 +15,8 @@ const Task = () => {
   const { id } = useParams()
   const task = useSelector((state) => state.task.tasks[id - 1])
 
+  const onBackClick = () => history.push(ROUTE_LOG)
+
   return (
     <>
       {!task ? (
@@ -45,7 +47,7 @@ const Task = () => {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button onClick={() => history.push(ROUTE_LOG)}>Back</Button>
+              <Button onClick={onBackClick}>Back</Button>
             </CardActions>
           </Card>
         </Wrapper>

@@ -3,8 +3,8 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  Legend,
   ResponsiveContainer,
+  Legend,
   Tooltip,
   XAxis,
   YAxis,
@@ -20,6 +20,13 @@ import { Modal } from '../Modal'
 
 import { Wrapper } from './Chart.styles'
 
+const BAR_SIZE = 20
+const DOMAIN = [0, 60]
+const CONTAINER_SIZES = {
+  width: '100%',
+  height: 300,
+}
+
 const Chart = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { tasks } = useSelector((state) => state.task)
@@ -28,33 +35,42 @@ const Chart = () => {
 
   const chartData = useMemo(() => mapTasksForChart(tasks), [tasks])
 
-  const onGenerateClick = () => {
+  const onModalAgreement = () => {
     const newTasks = generateNewTasks()
     dispatch(addGeneratedTasks(newTasks))
     setIsModalOpen(false)
   }
 
+  const onModalClose = () => setIsModalOpen(false)
+
+  const onGenerateClick = () => setIsModalOpen(true)
+
   return (
     <>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={CONTAINER_SIZES.width} height={CONTAINER_SIZES.height}>
         <BarChart data={chartData}>
           <Tooltip />
           <Legend />
           <CartesianGrid stroke={colors.whiteSmoke} />
           <XAxis dataKey="name" />
-          <YAxis domain={[0, 60]} />
-          <Bar dataKey="minutes" name="Minutes in hour" barSize={20} fill={colors.freeSpeechBlue} />
+          <YAxis domain={DOMAIN} />
+          <Bar
+            dataKey="minutes"
+            name="Minutes in hour"
+            barSize={BAR_SIZE}
+            fill={colors.freeSpeechBlue}
+          />
         </BarChart>
       </ResponsiveContainer>
       <Wrapper>
-        <Button onClick={() => setIsModalOpen(true)}>Generate</Button>
+        <Button onClick={onGenerateClick}>Generate</Button>
       </Wrapper>
       <Modal
         message="Are you sure you want to generate new tasks? All previous tasks will be erased!"
         isOpened={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={onModalClose}
         title="All previous tasks will be erased"
-        onSuccess={onGenerateClick}
+        onSuccess={onModalAgreement}
         showAgreementButton
       />
     </>

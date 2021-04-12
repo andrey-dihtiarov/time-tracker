@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { startTimer, setTaskName, stopTimer } from '../../store/timer'
 import { addTask } from '../../store/task'
 import { formatTime, getCurrentTime } from '../../utils/timeHelper'
-import { colors } from '../../constants/colors'
 
 import { ClockFace } from '../ClockFace'
 import Button from '../Button/Button'
@@ -12,6 +11,8 @@ import Button from '../Button/Button'
 import { Modal } from '../Modal'
 
 import { Wrapper, TaskNameInput } from './Timer.styles'
+
+const SECOND = 1000
 
 const Timer = () => {
   const [time, setTime] = useState(0)
@@ -23,8 +24,8 @@ const Timer = () => {
   const timerTick = useCallback(
     () =>
       setInterval(() => {
-        setTime((t) => t + 1000)
-      }, 1000),
+        setTime((t) => t + SECOND)
+      }, SECOND),
     [],
   )
 
@@ -32,8 +33,9 @@ const Timer = () => {
 
   useEffect(() => {
     let tick
+    const timePassed = getCurrentTime() - timeStarted
     if (timeStarted) {
-      setTime(getCurrentTime() - timeStarted)
+      setTime(timePassed)
       tick = timerTick()
     } else {
       setTime(timeStarted)
@@ -63,6 +65,8 @@ const Timer = () => {
 
   const onTaskNameChange = (event) => dispatch(setTaskName(event.target.value))
 
+  const onModalClose = () => setIsModalOpen(false)
+
   return (
     <>
       <Wrapper>
@@ -70,7 +74,6 @@ const Timer = () => {
           placeholder="Enter your task name"
           onChange={onTaskNameChange}
           value={name}
-          inputProps={{ style: { textAlign: 'center', color: colors.freeSpeechBlue } }}
         />
         <ClockFace>{timer}</ClockFace>
         <Button onClick={onStartButtonClick}>{timeStarted ? 'STOP' : 'START'}</Button>
@@ -78,9 +81,9 @@ const Timer = () => {
       <Modal
         message="You are trying to close your task without a name, enter the title and try again!"
         isOpened={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={onModalClose}
         title="Empty task name"
-        onSuccess={() => setIsModalOpen(false)}
+        onSuccess={onModalClose}
       />
     </>
   )

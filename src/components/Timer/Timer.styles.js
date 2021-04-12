@@ -17,11 +17,15 @@ export const Wrapper = styled.div`
 export const TaskNameInput = styled(TextField)`
   margin-top: 10px;
   margin-bottom: 20px;
+  text-align: center;
   & .MuiInputBase-root {
     justify-content: center;
     color: ${colors.freeSpeechBlue};
     font-size: 14px;
     font-weight: bold;
     width: 260px;
+    & .MuiInputBase-input {
+      text-align: center;
+    }
   }
 `

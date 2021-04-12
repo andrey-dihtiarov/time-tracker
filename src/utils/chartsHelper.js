@@ -1,5 +1,13 @@
 import moment from 'moment'
+
 import { MINUTE, TASK_DURATION, TASKS_AMOUNT } from '../constants/general'
+
+export const getRandomNumber = (min, max) => Math.round(Math.random() * (max - min) + min)
+
+export const getRandomTime = () => getRandomNumber(TASK_DURATION.MIN, TASK_DURATION.MAX) * MINUTE
+
+export const getRandomTimeAfterPreviousTask = () =>
+  getRandomNumber(TASK_DURATION.MIN, TASK_DURATION.AVERAGE) * MINUTE
 
 export const getEmptyChartColumns = () => {
   const numberOfHours = 24
@@ -18,13 +26,24 @@ export const mapTaskByHours = (tasks) =>
     endMin: Number(moment(task.timeEnded).format('m')),
   }))
 
+export const calculateMinsSpent = (minsSpent, subValue) => {
+  if (minsSpent < 0) {
+    return 0
+  }
+  const subtracted = minsSpent - subValue
+  if (subtracted < 0) {
+    return 0
+  }
+  return subtracted
+}
+
 export const mapTasksForChart = (tasks) => {
   const chartData = getEmptyChartColumns()
   const newChartData = [...chartData]
-  const minsInHour = 60
+  const minutesInHour = 60
   const tasksByHours = mapTaskByHours(tasks)
 
-  newChartData.forEach((hour) => {
+  chartData.forEach((hour) => {
     const { name: startHour } = hour
 
     tasksByHours
@@ -33,9 +52,9 @@ export const mapTasksForChart = (tasks) => {
         const hoursDiff = task.endHour - task.startHour
 
         if (hoursDiff > 0) {
-          let minsSpent = moment(task.endTime).diff(moment(task.startTime), 'minutes')
-          newChartData[startHour].minutes += minsInHour - task.startMin
-          minsSpent -= minsInHour - task.startMin
+          let minutesSpent = moment(task.endTime).diff(moment(task.startTime), 'minutes')
+          newChartData[startHour].minutes += minutesInHour - task.startMin
+          minutesSpent = calculateMinsSpent(minutesSpent, minutesInHour - task.startMin)
 
           const hoursDiffArray = Array(hoursDiff)
             .fill('')
@@ -44,12 +63,12 @@ export const mapTasksForChart = (tasks) => {
           hoursDiffArray.forEach((h) => {
             const nextHour = startHour + h
 
-            if (minsSpent < minsInHour) {
-              newChartData[nextHour].minutes += minsSpent
-              minsSpent -= minsSpent
+            if (minutesSpent < minutesInHour) {
+              newChartData[nextHour].minutes += minutesSpent
+              minutesSpent = calculateMinsSpent(minutesSpent, minutesSpent)
             } else {
-              newChartData[nextHour].minutes += minsInHour
-              minsSpent -= minsInHour
+              newChartData[nextHour].minutes += minutesInHour
+              minutesSpent = calculateMinsSpent(minutesSpent, minutesInHour)
             }
           })
         } else {
@@ -60,13 +79,6 @@ export const mapTasksForChart = (tasks) => {
 
   return newChartData
 }
-
-const getRandomNumber = (min, max) => Math.round(Math.random() * (max - min) + min)
-
-const getRandomTime = () => getRandomNumber(TASK_DURATION.MIN, TASK_DURATION.MAX) * MINUTE
-
-const getRandomTimeAfterPreviousTask = () =>
-  getRandomNumber(TASK_DURATION.MIN, TASK_DURATION.AVERAGE) * MINUTE
 
 export const generateNewTasks = () => {
   const date = new Date()

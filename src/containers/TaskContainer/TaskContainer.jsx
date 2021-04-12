@@ -1,33 +1,42 @@
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
-import { Tab, Tabs } from '@material-ui/core'
 
-import { colors } from '../../constants/colors'
 import * as ROUTES from '../../constants/routes'
 
 import { Table, Chart } from '../../components'
 
-import { Wrapper } from './TaskContainer.styles'
+import { Wrapper, Tabs, Tab } from './TaskContainer.styles'
+
+const TABS = {
+  logTab: 0,
+  chartTab: 1,
+}
 
 const TaskContainer = () => {
   const history = useHistory()
   const { pathname } = useLocation()
 
-  const initActiveTab = useMemo(() => {
+  const getActiveTab = useCallback(() => {
     if (pathname === ROUTES.ROUTE_LOG) {
-      return 0
+      return TABS.logTab
     }
     if (pathname === ROUTES.ROUTE_CHART) {
-      return 1
+      return TABS.chartTab
     }
-    return 0
+    return TABS.logTab
   }, [pathname])
+
+  const initActiveTab = useMemo(() => getActiveTab(), [getActiveTab])
 
   const [activeTab, setActiveTab] = useState(initActiveTab)
 
+  useEffect(() => {
+    const currentTab = getActiveTab()
+    setActiveTab(currentTab)
+  }, [getActiveTab])
+
   const onTabChange = (event, value) => {
-    setActiveTab(value)
-    if (value === 1) {
+    if (value === TABS.chartTab) {
       return history.push(ROUTES.ROUTE_CHART)
     }
     return history.push(ROUTES.ROUTE_LOG)
@@ -35,14 +44,9 @@ const TaskContainer = () => {
 
   return (
     <Wrapper>
-      <Tabs
-        value={activeTab}
-        onChange={onTabChange}
-        style={{ backgroundColor: colors.irisBlue }}
-        centered
-      >
-        <Tab label="Tasks Log" fullWidth style={{ minWidth: '50%' }} />
-        <Tab label="Tasks Chart" fullWidth style={{ minWidth: '50%' }} />
+      <Tabs value={activeTab} onChange={onTabChange} centered>
+        <Tab label="Tasks Log" fullWidth />
+        <Tab label="Tasks Chart" fullWidth />
       </Tabs>
       <Switch>
         <Route path={ROUTES.ROUTE_LOG} component={Table} />

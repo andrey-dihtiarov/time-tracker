@@ -16,7 +16,9 @@ import { ROUTE_TASK } from '../../constants/routes'
 import { Button } from '../Button'
 import { Modal } from '../Modal'
 
-import { BodyTableCell, HeadTableCell, BodyTableRow } from './Table.styles'
+import { BodyTableCell, HeadTableCell, BodyTableRow, NoTasks } from './Table.styles'
+
+const TABLE_HEADERS = ['№', 'Task', 'Task start', 'Task end', 'Task spent', 'Info', 'Delete']
 
 const Table = () => {
   const [deleteTaskId, setDeleteTaskId] = useState(null)
@@ -43,44 +45,46 @@ const Table = () => {
     setIsModalOpen(false)
   }
 
+  const onInfoClick = (index) => () => history.push(ROUTE_TASK.replace(':id', index + 1))
+
+  const onDeleteClick = (taskId) => () => openAlertModal(taskId)
+
   return (
     <>
-      <TableContainer>
-        <TaskTable>
-          <TableHead>
-            <TableRow>
-              <HeadTableCell>№</HeadTableCell>
-              <HeadTableCell>Task</HeadTableCell>
-              <HeadTableCell>Time start</HeadTableCell>
-              <HeadTableCell>Time end</HeadTableCell>
-              <HeadTableCell>Time spend</HeadTableCell>
-              <HeadTableCell>Info</HeadTableCell>
-              <HeadTableCell>Delete</HeadTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tasks.map((task, index) => (
-              <BodyTableRow key={task.id}>
-                <BodyTableCell>{index + 1}</BodyTableCell>
-                <BodyTableCell>{task.name}</BodyTableCell>
-                <BodyTableCell>{formatTime(task.timeStarted)}</BodyTableCell>
-                <BodyTableCell>{formatTime(task.timeEnded)}</BodyTableCell>
-                <BodyTableCell>
-                  {formatTime(task.timeEnded - task.timeStarted, false)}
-                </BodyTableCell>
-                <BodyTableCell>
-                  <Button onClick={() => history.push(ROUTE_TASK.replace(':id', index + 1))}>
-                    Info
-                  </Button>
-                </BodyTableCell>
-                <BodyTableCell>
-                  <Button onClick={() => openAlertModal(task.id)}>Delete</Button>
-                </BodyTableCell>
-              </BodyTableRow>
-            ))}
-          </TableBody>
-        </TaskTable>
-      </TableContainer>
+      {!tasks.length ? (
+        <NoTasks>There are no tasks yet!</NoTasks>
+      ) : (
+        <TableContainer>
+          <TaskTable>
+            <TableHead>
+              <TableRow>
+                {TABLE_HEADERS.map((header) => (
+                  <HeadTableCell key={header}>{header}</HeadTableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {tasks.map((task, index) => (
+                <BodyTableRow key={task.id}>
+                  <BodyTableCell>{index + 1}</BodyTableCell>
+                  <BodyTableCell>{task.name}</BodyTableCell>
+                  <BodyTableCell>{formatTime(task.timeStarted)}</BodyTableCell>
+                  <BodyTableCell>{formatTime(task.timeEnded)}</BodyTableCell>
+                  <BodyTableCell>
+                    {formatTime(task.timeEnded - task.timeStarted, false)}
+                  </BodyTableCell>
+                  <BodyTableCell>
+                    <Button onClick={onInfoClick(index + 1)}>Info</Button>
+                  </BodyTableCell>
+                  <BodyTableCell>
+                    <Button onClick={onDeleteClick(task.id)}>Delete</Button>
+                  </BodyTableCell>
+                </BodyTableRow>
+              ))}
+            </TableBody>
+          </TaskTable>
+        </TableContainer>
+      )}
       <Modal
         message="You are trying to close your task without a name, enter the title and try again!"
         isOpened={isModalOpen}
