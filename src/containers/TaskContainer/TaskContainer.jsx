@@ -1,46 +1,46 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 
-import * as ROUTES from '../../constants/routes'
+import * as ROUTES from '../../constants/routes';
 
-import { Table, Chart } from '../../components'
+import { Table, Chart } from '../../components';
 
-import { Wrapper, Tabs, Tab } from './TaskContainer.styles'
+import { Wrapper, Tabs, Tab } from './TaskContainer.styles';
 
 const TABS = {
   logTab: 0,
   chartTab: 1,
-}
+};
 
 const TaskContainer = () => {
-  const history = useHistory()
-  const { pathname } = useLocation()
+  const history = useHistory();
+  const { pathname } = useLocation();
 
   const getActiveTab = useCallback(() => {
     if (pathname === ROUTES.ROUTE_LOG) {
-      return TABS.logTab
+      return TABS.logTab;
     }
     if (pathname === ROUTES.ROUTE_CHART) {
-      return TABS.chartTab
+      return TABS.chartTab;
     }
-    return TABS.logTab
-  }, [pathname])
+    return TABS.logTab;
+  }, [pathname]);
 
-  const initActiveTab = useMemo(() => getActiveTab(), [getActiveTab])
+  const initActiveTab = useMemo(() => getActiveTab(), [getActiveTab]);
 
-  const [activeTab, setActiveTab] = useState(initActiveTab)
+  const [activeTab, setActiveTab] = useState(initActiveTab);
 
   useEffect(() => {
-    const currentTab = getActiveTab()
-    setActiveTab(currentTab)
-  }, [getActiveTab])
+    const currentTab = getActiveTab();
+    setActiveTab(currentTab);
+  }, [getActiveTab]);
 
   const onTabChange = (event, value) => {
     if (value === TABS.chartTab) {
-      return history.push(ROUTES.ROUTE_CHART)
+      return history.push(ROUTES.ROUTE_CHART);
     }
-    return history.push(ROUTES.ROUTE_LOG)
-  }
+    return history.push(ROUTES.ROUTE_LOG);
+  };
 
   return (
     <Wrapper>
@@ -54,7 +54,7 @@ const TaskContainer = () => {
         <Route component={Table} />
       </Switch>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default TaskContainer
+export default TaskContainer;

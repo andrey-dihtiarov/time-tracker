@@ -1,3 +1,3 @@
-export * from './MainPage'
-export * from './NotFoundPage'
-export * from './TaskPage'
+export * from './MainPage';
+export * from './NotFoundPage';
+export * from './TaskPage';

@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Dialog, DialogActions, DialogContent, DialogContentText } from '@material-ui/core'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Dialog, DialogActions, DialogContent, DialogContentText } from '@material-ui/core';
 
-import { DialogTitle, CloseButton, AgreementButton } from './Modal.styles'
+import { DialogTitle, CloseButton, AgreementButton } from './Modal.styles';
 
 const Modal = ({ isOpened, onClose, onSuccess, title, message, showAgreementButton }) => (
   <Dialog open={isOpened} onClose={onClose} fullWidth>
@@ -21,7 +21,7 @@ const Modal = ({ isOpened, onClose, onSuccess, title, message, showAgreementButt
       )}
     </DialogActions>
   </Dialog>
-)
+);
 
 Modal.propTypes = {
   isOpened: PropTypes.bool,
@@ -30,11 +30,11 @@ Modal.propTypes = {
   onSuccess: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
-}
+};
 
 Modal.defaultProps = {
   isOpened: false,
   showAgreementButton: false,
-}
+};
 
-export default Modal
+export default Modal;

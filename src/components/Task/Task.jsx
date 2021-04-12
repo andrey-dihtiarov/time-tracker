@@ -1,21 +1,21 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { useHistory, useParams, Redirect } from 'react-router-dom'
-import { CardActions, CardContent } from '@material-ui/core'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory, useParams, Redirect } from 'react-router-dom';
+import { CardActions, CardContent } from '@material-ui/core';
 
-import { formatTime } from '../../utils/timeHelper'
-import { ROUTE_LOG, ROUTE_NOT_FOUND } from '../../constants/routes'
+import { formatTime } from '../../utils/timeHelper';
+import { ROUTE_LOG, ROUTE_NOT_FOUND } from '../../constants/routes';
 
-import { Button } from '../Button'
+import { Button } from '../Button';
 
-import { Label, Value, Card, Typography, Wrapper } from './Task.styles'
+import { Label, Value, Card, Typography, Wrapper } from './Task.styles';
 
 const Task = () => {
-  const history = useHistory()
-  const { id } = useParams()
-  const task = useSelector((state) => state.task.tasks.find((t) => t.id === id))
+  const history = useHistory();
+  const { id } = useParams();
+  const task = useSelector((state) => state.task.tasks.find((t) => t.id === id));
 
-  const onBackClick = () => history.push(ROUTE_LOG)
+  const onBackClick = () => history.push(ROUTE_LOG);
 
   return (
     <>
@@ -53,7 +53,7 @@ const Task = () => {
         </Wrapper>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Task
+export default Task;

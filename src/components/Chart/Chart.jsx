@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react';
 import {
   Bar,
   BarChart,
@@ -8,42 +8,42 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts'
-import { useSelector, useDispatch } from 'react-redux'
+} from 'recharts';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { colors } from '../../constants/colors'
-import { generateNewTasks, mapTasksForChart } from '../../utils/chartsHelper'
-import { addGeneratedTasks } from '../../store/task'
+import { colors } from '../../constants/colors';
+import { generateNewTasks, mapTasksForChart } from '../../utils/chartsHelper';
+import { addGeneratedTasks } from '../../store/task';
 
-import { Button } from '../Button'
-import { Modal } from '../Modal'
+import { Button } from '../Button';
+import { Modal } from '../Modal';
 
-import { Wrapper } from './Chart.styles'
+import { Wrapper } from './Chart.styles';
 
-const BAR_SIZE = 20
-const DOMAIN = [0, 60]
+const BAR_SIZE = 20;
+const DOMAIN = [0, 60];
 const CONTAINER_SIZES = {
   width: '100%',
   height: 300,
-}
+};
 
 const Chart = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const { tasks } = useSelector((state) => state.task)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { tasks } = useSelector((state) => state.task);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const chartData = useMemo(() => mapTasksForChart(tasks), [tasks])
+  const chartData = useMemo(() => mapTasksForChart(tasks), [tasks]);
 
   const onModalAgreement = () => {
-    const newTasks = generateNewTasks()
-    dispatch(addGeneratedTasks(newTasks))
-    setIsModalOpen(false)
-  }
+    const newTasks = generateNewTasks();
+    dispatch(addGeneratedTasks(newTasks));
+    setIsModalOpen(false);
+  };
 
-  const onModalClose = () => setIsModalOpen(false)
+  const onModalClose = () => setIsModalOpen(false);
 
-  const onGenerateClick = () => setIsModalOpen(true)
+  const onGenerateClick = () => setIsModalOpen(true);
 
   return (
     <>
@@ -74,7 +74,7 @@ const Chart = () => {
         showAgreementButton
       />
     </>
-  )
-}
+  );
+};
 
-export default Chart
+export default Chart;

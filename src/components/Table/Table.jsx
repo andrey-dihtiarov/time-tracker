@@ -1,53 +1,53 @@
-import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   Table as TaskTable,
   TableContainer,
   TableHead,
   TableBody,
   TableRow,
-} from '@material-ui/core'
+} from '@material-ui/core';
 
-import { deleteTask } from '../../store/task'
-import { formatTime } from '../../utils/timeHelper'
-import { ROUTE_TASK } from '../../constants/routes'
+import { deleteTask } from '../../store/task';
+import { formatTime } from '../../utils/timeHelper';
+import { ROUTE_TASK } from '../../constants/routes';
 
-import { Button } from '../Button'
-import { Modal } from '../Modal'
+import { Button } from '../Button';
+import { Modal } from '../Modal';
 
-import { BodyTableCell, HeadTableCell, BodyTableRow, NoTasks } from './Table.styles'
+import { BodyTableCell, HeadTableCell, BodyTableRow, NoTasks } from './Table.styles';
 
-const TABLE_HEADERS = ['№', 'Task name', 'Task start', 'Task end', 'Task spent', 'Info', 'Delete']
+const TABLE_HEADERS = ['№', 'Task name', 'Task start', 'Task end', 'Task spent', 'Info', 'Delete'];
 
 const Table = () => {
-  const [deleteTaskId, setDeleteTaskId] = useState(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const history = useHistory()
-  const { tasks } = useSelector((state) => state.task)
-  const dispatch = useDispatch()
+  const [deleteTaskId, setDeleteTaskId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const history = useHistory();
+  const { tasks } = useSelector((state) => state.task);
+  const dispatch = useDispatch();
 
   const onModalSuccess = () => {
     if (deleteTaskId) {
-      dispatch(deleteTask(deleteTaskId))
+      dispatch(deleteTask(deleteTaskId));
     }
-    setDeleteTaskId(null)
-    setIsModalOpen(false)
-  }
+    setDeleteTaskId(null);
+    setIsModalOpen(false);
+  };
 
   const openAlertModal = (taskId) => {
-    setDeleteTaskId(taskId)
-    setIsModalOpen(true)
-  }
+    setDeleteTaskId(taskId);
+    setIsModalOpen(true);
+  };
 
   const onModalClose = () => {
-    setDeleteTaskId(null)
-    setIsModalOpen(false)
-  }
+    setDeleteTaskId(null);
+    setIsModalOpen(false);
+  };
 
-  const onInfoClick = (taskId) => () => history.push(ROUTE_TASK.replace(':id', taskId))
+  const onInfoClick = (taskId) => () => history.push(ROUTE_TASK.replace(':id', taskId));
 
-  const onDeleteClick = (taskId) => () => openAlertModal(taskId)
+  const onDeleteClick = (taskId) => () => openAlertModal(taskId);
 
   return (
     <>
@@ -94,7 +94,7 @@ const Table = () => {
         showAgreementButton
       />
     </>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

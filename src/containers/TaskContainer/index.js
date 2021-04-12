@@ -1,1 +1,1 @@
-export { default as TaskContainer } from './TaskContainer'
+export { default as TaskContainer } from './TaskContainer';

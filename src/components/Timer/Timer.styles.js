@@ -1,9 +1,9 @@
-import styled from 'styled-components'
-import { TextField } from '@material-ui/core'
+import styled from 'styled-components';
+import { TextField } from '@material-ui/core';
 
-import { colors } from '../../constants/colors'
+import { colors } from '../../constants/colors';
 
-import { Button } from '../Button'
+import { Button } from '../Button';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   ${Button} {
     margin-top: 20px;
   }
-`
+`;
 
 export const TaskNameInput = styled(TextField)`
   margin-top: 10px;
@@ -28,4 +28,4 @@ export const TaskNameInput = styled(TextField)`
       text-align: center;
     }
   }
-`
+`;

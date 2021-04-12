@@ -9,4 +9,4 @@ export const colors = {
   irisBlue: '#01BCD5',
   jazzBerryJam: '#BA074E',
   whiteSmoke: '#F9F9F9',
-}
+};

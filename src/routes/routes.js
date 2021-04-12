@@ -1,9 +1,9 @@
-import React from 'react'
-import { Switch, Route, HashRouter, Redirect } from 'react-router-dom'
+import React from 'react';
+import { Switch, Route, HashRouter, Redirect } from 'react-router-dom';
 
-import * as ROUTES from '../constants/routes'
+import * as ROUTES from '../constants/routes';
 
-import { MainPage, NotFoundPage, TaskPage } from '../pages'
+import { MainPage, NotFoundPage, TaskPage } from '../pages';
 
 const Routes = () => (
   <HashRouter>
@@ -20,6 +20,6 @@ const Routes = () => (
       </Switch>
     </Switch>
   </HashRouter>
-)
+);
 
-export default Routes
+export default Routes;

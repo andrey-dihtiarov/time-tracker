@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import { colors } from '../../constants/colors'
+import styled from 'styled-components';
+import { colors } from '../../constants/colors';
 
 export const Wrapper = styled.div`
   width: 200px;
@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   background-color: ${colors.white};
   box-shadow: 0 2px 5px 1px ${colors.silver};
   border-radius: 50%;
-`
+`;
 
 export const Label = styled.input`
   font-size: 30px;
@@ -24,4 +24,4 @@ export const Label = styled.input`
   &:disabled {
     color: ${colors.freeSpeechBlue};
   }
-`
+`;

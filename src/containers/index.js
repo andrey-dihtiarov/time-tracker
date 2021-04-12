@@ -1,1 +1,1 @@
-export * from './TaskContainer'
+export * from './TaskContainer';

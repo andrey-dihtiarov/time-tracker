@@ -53,7 +53,7 @@ export const MOCKED_TASKS = [
     timeStarted: new Date('2021-04-11 23:40:00').getTime(),
     timeEnded: new Date('2021-04-11 23:50:00').getTime(),
   },
-]
+];
 
 export const MOCKED_CHART_DATA = [
   { name: 0, minutes: 60 },
@@ -80,4 +80,4 @@ export const MOCKED_CHART_DATA = [
   { name: 21, minutes: 0 },
   { name: 22, minutes: 60 },
   { name: 23, minutes: 28 },
-]
+];

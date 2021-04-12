@@ -1,21 +1,21 @@
-import moment from 'moment'
-import { v4 as uuid } from 'uuid'
+import moment from 'moment';
+import { v4 as uuid } from 'uuid';
 
-import { MINUTE, TASK_DURATION, TASKS_AMOUNT } from '../constants/general'
+import { MINUTE, TASK_DURATION, TASKS_AMOUNT } from '../constants/general';
 
-export const getRandomNumber = (min, max) => Math.round(Math.random() * (max - min) + min)
+export const getRandomNumber = (min, max) => Math.round(Math.random() * (max - min) + min);
 
-export const getRandomTime = () => getRandomNumber(TASK_DURATION.MIN, TASK_DURATION.MAX) * MINUTE
+export const getRandomTime = () => getRandomNumber(TASK_DURATION.MIN, TASK_DURATION.MAX) * MINUTE;
 
 export const getRandomTimeAfterPreviousTask = () =>
-  getRandomNumber(TASK_DURATION.MIN, TASK_DURATION.AVERAGE) * MINUTE
+  getRandomNumber(TASK_DURATION.MIN, TASK_DURATION.AVERAGE) * MINUTE;
 
 export const getEmptyChartColumns = () => {
-  const numberOfHours = 24
+  const numberOfHours = 24;
   return Array(numberOfHours)
     .fill('')
-    .map((item, index) => ({ name: index, minutes: 0 }))
-}
+    .map((item, index) => ({ name: index, minutes: 0 }));
+};
 
 export const mapTaskByHours = (tasks) =>
   tasks.map((task) => ({
@@ -25,91 +25,91 @@ export const mapTaskByHours = (tasks) =>
     startMin: Number(moment(task.timeStarted).format('m')),
     endHour: Number(moment(task.timeEnded).format('H')),
     endMin: Number(moment(task.timeEnded).format('m')),
-  }))
+  }));
 
 export const calculateMinsSpent = (minsSpent, subValue) => {
   if (minsSpent < 0) {
-    return 0
+    return 0;
   }
-  const subtracted = minsSpent - subValue
+  const subtracted = minsSpent - subValue;
   if (subtracted < 0) {
-    return 0
+    return 0;
   }
-  return subtracted
-}
+  return subtracted;
+};
 
 export const mapTasksForChart = (tasks) => {
-  const chartData = getEmptyChartColumns()
-  const newChartData = [...chartData]
-  const minutesInHour = 60
-  const tasksByHours = mapTaskByHours(tasks)
+  const chartData = getEmptyChartColumns();
+  const newChartData = [...chartData];
+  const minutesInHour = 60;
+  const tasksByHours = mapTaskByHours(tasks);
 
   chartData.forEach((hour) => {
-    const { name: startHour } = hour
+    const { name: startHour } = hour;
 
     tasksByHours
       .filter((task) => task.startHour === startHour)
       .forEach((task) => {
-        const hoursDiff = task.endHour - task.startHour
+        const hoursDiff = task.endHour - task.startHour;
 
         if (hoursDiff > 0) {
-          let minutesSpent = moment(task.endTime).diff(moment(task.startTime), 'minutes')
-          newChartData[startHour].minutes += minutesInHour - task.startMin
-          minutesSpent = calculateMinsSpent(minutesSpent, minutesInHour - task.startMin)
+          let minutesSpent = moment(task.endTime).diff(moment(task.startTime), 'minutes');
+          newChartData[startHour].minutes += minutesInHour - task.startMin;
+          minutesSpent = calculateMinsSpent(minutesSpent, minutesInHour - task.startMin);
 
           const hoursDiffArray = Array(hoursDiff)
             .fill('')
-            .map((item, index) => index + 1)
+            .map((item, index) => index + 1);
 
           hoursDiffArray.forEach((h) => {
-            const nextHour = startHour + h
+            const nextHour = startHour + h;
 
             if (minutesSpent < minutesInHour) {
-              newChartData[nextHour].minutes += minutesSpent
-              minutesSpent = calculateMinsSpent(minutesSpent, minutesSpent)
+              newChartData[nextHour].minutes += minutesSpent;
+              minutesSpent = calculateMinsSpent(minutesSpent, minutesSpent);
             } else {
-              newChartData[nextHour].minutes += minutesInHour
-              minutesSpent = calculateMinsSpent(minutesSpent, minutesInHour)
+              newChartData[nextHour].minutes += minutesInHour;
+              minutesSpent = calculateMinsSpent(minutesSpent, minutesInHour);
             }
-          })
+          });
         } else {
-          newChartData[startHour].minutes += task.endMin - task.startMin
+          newChartData[startHour].minutes += task.endMin - task.startMin;
         }
-      })
-  })
+      });
+  });
 
-  return newChartData
-}
+  return newChartData;
+};
 
 export const generateNewTasks = () => {
-  const date = new Date()
-  const amountTasks = getRandomNumber(TASKS_AMOUNT.MIN, TASKS_AMOUNT.MAX)
-  const newTasks = []
-  const dateInMS = Number(new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime())
+  const date = new Date();
+  const amountTasks = getRandomNumber(TASKS_AMOUNT.MIN, TASKS_AMOUNT.MAX);
+  const newTasks = [];
+  const dateInMS = Number(new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime());
 
   const amountTasksArray = Array(amountTasks)
     .fill('')
-    .map((item, index) => index)
+    .map((item, index) => index);
 
   amountTasksArray.forEach((item) => {
-    const randomTime = getRandomTime()
-    let timeStarted
+    const randomTime = getRandomTime();
+    let timeStarted;
     if (!newTasks.length) {
-      timeStarted = dateInMS
+      timeStarted = dateInMS;
     } else {
-      timeStarted = newTasks[item - 1].timeEnded + getRandomTimeAfterPreviousTask()
+      timeStarted = newTasks[item - 1].timeEnded + getRandomTimeAfterPreviousTask();
     }
-    const timeEnded = randomTime + timeStarted
-    const name = `Task-${item + 1}`
-    const id = uuid()
+    const timeEnded = randomTime + timeStarted;
+    const name = `Task-${item + 1}`;
+    const id = uuid();
 
     newTasks.push({
       id,
       name,
       timeStarted,
       timeEnded,
-    })
-  })
+    });
+  });
 
-  return newTasks
-}
+  return newTasks;
+};

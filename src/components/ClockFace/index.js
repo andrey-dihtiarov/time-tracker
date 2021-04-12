@@ -1,1 +1,1 @@
-export { default as ClockFace } from './ClockFace'
+export { default as ClockFace } from './ClockFace';

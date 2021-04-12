@@ -1,9 +1,9 @@
-const { createSlice } = require('@reduxjs/toolkit')
+const { createSlice } = require('@reduxjs/toolkit');
 
 const INIT_STATE = {
   name: '',
   timeStarted: 0,
-}
+};
 
 const timer = createSlice({
   name: 'timer',
@@ -13,8 +13,8 @@ const timer = createSlice({
     setTaskName: (state, action) => ({ ...state, name: action.payload }),
     stopTimer: () => INIT_STATE,
   },
-})
+});
 
-export const { startTimer, setTaskName, stopTimer } = timer.actions
+export const { startTimer, setTaskName, stopTimer } = timer.actions;
 
-export default timer.reducer
+export default timer.reducer;

@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-import { Task } from '../../components'
+import { Task } from '../../components';
 
-const TaskPage = () => <Task />
+const TaskPage = () => <Task />;
 
-export default TaskPage
+export default TaskPage;
