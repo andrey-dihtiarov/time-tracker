@@ -74,7 +74,7 @@ const Table = () => {
                     {formatTime(task.timeEnded - task.timeStarted, false)}
                   </BodyTableCell>
                   <BodyTableCell>
-                    <Button onClick={onInfoClick(index + 1)}>Info</Button>
+                    <Button onClick={onInfoClick(index)}>Info</Button>
                   </BodyTableCell>
                   <BodyTableCell>
                     <Button onClick={onDeleteClick(task.id)}>Delete</Button>
