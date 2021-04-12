@@ -1,4 +1,5 @@
-export const ROUTE_HOME = '/'
+export const ROUTE_ROOT = '/'
+export const ROUTE_HOME = '/time-tracker'
 export const ROUTE_LOG = '/log'
 export const ROUTE_CHART = '/chart'
 export const ROUTE_TASK = '/task/:id'
