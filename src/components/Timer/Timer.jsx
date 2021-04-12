@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { v4 as uuid } from 'uuid'
 
 import { startTimer, setTaskName, stopTimer } from '../../store/timer'
 import { addTask } from '../../store/task'
@@ -52,7 +53,7 @@ const Timer = () => {
       }
       dispatch(
         addTask({
-          id: `${name}-${timeStarted}`,
+          id: uuid(),
           timeStarted,
           name,
           timeEnded: getCurrentTime(),

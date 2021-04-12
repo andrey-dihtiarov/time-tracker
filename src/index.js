@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals'
 
 import store from './store/store'
 
-import App from './App/App'
+import { App } from './App'
 import GlobalStyle from './globalStyles'
 
 ReactDOM.render(

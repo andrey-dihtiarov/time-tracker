@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { v4 as uuid } from 'uuid'
 
 import { MINUTE, TASK_DURATION, TASKS_AMOUNT } from '../constants/general'
 
@@ -100,7 +101,7 @@ export const generateNewTasks = () => {
     }
     const timeEnded = randomTime + timeStarted
     const name = `Task-${item + 1}`
-    const id = `${name}-${timeStarted}`
+    const id = uuid()
 
     newTasks.push({
       id,

@@ -18,7 +18,7 @@ import { Modal } from '../Modal'
 
 import { BodyTableCell, HeadTableCell, BodyTableRow, NoTasks } from './Table.styles'
 
-const TABLE_HEADERS = ['№', 'Task', 'Task start', 'Task end', 'Task spent', 'Info', 'Delete']
+const TABLE_HEADERS = ['№', 'Task name', 'Task start', 'Task end', 'Task spent', 'Info', 'Delete']
 
 const Table = () => {
   const [deleteTaskId, setDeleteTaskId] = useState(null)
@@ -45,7 +45,7 @@ const Table = () => {
     setIsModalOpen(false)
   }
 
-  const onInfoClick = (index) => () => history.push(ROUTE_TASK.replace(':id', index + 1))
+  const onInfoClick = (taskId) => () => history.push(ROUTE_TASK.replace(':id', taskId))
 
   const onDeleteClick = (taskId) => () => openAlertModal(taskId)
 
@@ -74,7 +74,7 @@ const Table = () => {
                     {formatTime(task.timeEnded - task.timeStarted, false)}
                   </BodyTableCell>
                   <BodyTableCell>
-                    <Button onClick={onInfoClick(index)}>Info</Button>
+                    <Button onClick={onInfoClick(task.id)}>Info</Button>
                   </BodyTableCell>
                   <BodyTableCell>
                     <Button onClick={onDeleteClick(task.id)}>Delete</Button>

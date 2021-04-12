@@ -13,7 +13,7 @@ import { Label, Value, Card, Typography, Wrapper } from './Task.styles'
 const Task = () => {
   const history = useHistory()
   const { id } = useParams()
-  const task = useSelector((state) => state.task.tasks[id - 1])
+  const task = useSelector((state) => state.task.tasks.find((t) => t.id === id))
 
   const onBackClick = () => history.push(ROUTE_LOG)
 
