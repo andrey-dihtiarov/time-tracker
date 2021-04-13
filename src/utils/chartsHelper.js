@@ -25,7 +25,7 @@ export const mapTaskByHours = (tasks) =>
     endMin: Number(moment(task.timeEnded).format('m')),
   }));
 
-export const calculateMinsSpent = (minsSpent, subValue) => {
+export const calculateMinutesSpent = (minsSpent, subValue) => {
   if (minsSpent < 0) {
     return 0;
   }
@@ -53,7 +53,7 @@ export const mapTasksForChart = (tasks) => {
         if (hoursDiff > 0) {
           let minutesSpent = moment(task.endTime).diff(moment(task.startTime), 'minutes');
           newChartData[startHour].minutes += minutesInHour - task.startMin;
-          minutesSpent = calculateMinsSpent(minutesSpent, minutesInHour - task.startMin);
+          minutesSpent = calculateMinutesSpent(minutesSpent, minutesInHour - task.startMin);
 
           Array.from({ length: hoursDiff })
             .map((item, index) => index + 1)
@@ -62,10 +62,10 @@ export const mapTasksForChart = (tasks) => {
 
               if (minutesSpent < minutesInHour) {
                 newChartData[nextHour].minutes += minutesSpent;
-                minutesSpent = calculateMinsSpent(minutesSpent, minutesSpent);
+                minutesSpent = calculateMinutesSpent(minutesSpent, minutesSpent);
               } else {
                 newChartData[nextHour].minutes += minutesInHour;
-                minutesSpent = calculateMinsSpent(minutesSpent, minutesInHour);
+                minutesSpent = calculateMinutesSpent(minutesSpent, minutesInHour);
               }
             });
         } else {
