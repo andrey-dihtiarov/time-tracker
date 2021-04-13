@@ -4,7 +4,7 @@ import { useHistory, useParams, Redirect } from 'react-router-dom';
 import { CardActions, CardContent } from '@material-ui/core';
 
 import { formatTime } from '../../utils/timeHelper';
-import { ROUTE_LOG, ROUTE_NOT_FOUND } from '../../constants/routes';
+import { ROUTE_NOT_FOUND } from '../../constants/routes';
 
 import { Button } from '../Button';
 
@@ -15,7 +15,7 @@ const Task = () => {
   const { id } = useParams();
   const task = useSelector((state) => state.task.tasks.find((t) => t.id === id));
 
-  const onBackClick = () => history.push(ROUTE_LOG);
+  const onBackClick = () => history.goBack();
 
   return (
     <>
