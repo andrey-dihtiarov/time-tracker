@@ -16,19 +16,12 @@ const TaskContainer = () => {
   const history = useHistory();
   const { pathname } = useLocation();
 
-  const activeTab = useMemo(() => {
-    if (pathname === ROUTES.ROUTE_CHART) {
-      return TABS.chartTab;
-    }
-    return TABS.logTab;
-  }, [pathname]);
+  const activeTab = useMemo(() => (pathname === ROUTES.ROUTE_CHART ? TABS.chartTab : TABS.logTab), [
+    pathname,
+  ]);
 
-  const onTabChange = (event, value) => {
-    if (value === TABS.chartTab) {
-      return history.push(ROUTES.ROUTE_CHART);
-    }
-    return history.push(ROUTES.ROUTE_LOG);
-  };
+  const onTabChange = (event, value) =>
+    value === TABS.chartTab ? history.push(ROUTES.ROUTE_CHART) : history.push(ROUTES.ROUTE_LOG);
 
   return (
     <Wrapper>
