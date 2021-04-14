@@ -12,9 +12,7 @@ export const getRandomTimeAfterPreviousTask = () =>
 
 export const getEmptyChartColumns = () => {
   const numberOfHours = 24;
-  return Array(numberOfHours)
-    .fill('')
-    .map((item, index) => ({ name: index, minutes: 0 }));
+  return Array.from({ length: numberOfHours }).map((item, index) => ({ name: index, minutes: 0 }));
 };
 
 export const mapTaskByHours = (tasks) =>
@@ -27,7 +25,7 @@ export const mapTaskByHours = (tasks) =>
     endMin: Number(moment(task.timeEnded).format('m')),
   }));
 
-export const calculateMinsSpent = (minsSpent, subValue) => {
+export const calculateMinutesSpent = (minsSpent, subValue) => {
   if (minsSpent < 0) {
     return 0;
   }
@@ -55,23 +53,21 @@ export const mapTasksForChart = (tasks) => {
         if (hoursDiff > 0) {
           let minutesSpent = moment(task.endTime).diff(moment(task.startTime), 'minutes');
           newChartData[startHour].minutes += minutesInHour - task.startMin;
-          minutesSpent = calculateMinsSpent(minutesSpent, minutesInHour - task.startMin);
+          minutesSpent = calculateMinutesSpent(minutesSpent, minutesInHour - task.startMin);
 
-          const hoursDiffArray = Array(hoursDiff)
-            .fill('')
-            .map((item, index) => index + 1);
+          Array.from({ length: hoursDiff })
+            .map((item, index) => index + 1)
+            .forEach((h) => {
+              const nextHour = startHour + h;
 
-          hoursDiffArray.forEach((h) => {
-            const nextHour = startHour + h;
-
-            if (minutesSpent < minutesInHour) {
-              newChartData[nextHour].minutes += minutesSpent;
-              minutesSpent = calculateMinsSpent(minutesSpent, minutesSpent);
-            } else {
-              newChartData[nextHour].minutes += minutesInHour;
-              minutesSpent = calculateMinsSpent(minutesSpent, minutesInHour);
-            }
-          });
+              if (minutesSpent < minutesInHour) {
+                newChartData[nextHour].minutes += minutesSpent;
+                minutesSpent = calculateMinutesSpent(minutesSpent, minutesSpent);
+              } else {
+                newChartData[nextHour].minutes += minutesInHour;
+                minutesSpent = calculateMinutesSpent(minutesSpent, minutesInHour);
+              }
+            });
         } else {
           newChartData[startHour].minutes += task.endMin - task.startMin;
         }
@@ -87,29 +83,27 @@ export const generateNewTasks = () => {
   const newTasks = [];
   const dateInMS = Number(new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime());
 
-  const amountTasksArray = Array(amountTasks)
-    .fill('')
-    .map((item, index) => index);
+  Array.from({ length: amountTasks })
+    .map((item, index) => index)
+    .forEach((item) => {
+      const randomTime = getRandomTime();
+      let timeStarted;
+      if (!newTasks.length) {
+        timeStarted = dateInMS;
+      } else {
+        timeStarted = newTasks[item - 1].timeEnded + getRandomTimeAfterPreviousTask();
+      }
+      const timeEnded = randomTime + timeStarted;
+      const name = `Task-${item + 1}`;
+      const id = uuid();
 
-  amountTasksArray.forEach((item) => {
-    const randomTime = getRandomTime();
-    let timeStarted;
-    if (!newTasks.length) {
-      timeStarted = dateInMS;
-    } else {
-      timeStarted = newTasks[item - 1].timeEnded + getRandomTimeAfterPreviousTask();
-    }
-    const timeEnded = randomTime + timeStarted;
-    const name = `Task-${item + 1}`;
-    const id = uuid();
-
-    newTasks.push({
-      id,
-      name,
-      timeStarted,
-      timeEnded,
+      newTasks.push({
+        id,
+        name,
+        timeStarted,
+        timeEnded,
+      });
     });
-  });
 
   return newTasks;
 };

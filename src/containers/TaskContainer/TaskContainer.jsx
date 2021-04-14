@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
@@ -16,31 +16,12 @@ const TaskContainer = () => {
   const history = useHistory();
   const { pathname } = useLocation();
 
-  const getActiveTab = useCallback(() => {
-    if (pathname === ROUTES.ROUTE_LOG) {
-      return TABS.logTab;
-    }
-    if (pathname === ROUTES.ROUTE_CHART) {
-      return TABS.chartTab;
-    }
-    return TABS.logTab;
-  }, [pathname]);
+  const activeTab = useMemo(() => (pathname === ROUTES.ROUTE_CHART ? TABS.chartTab : TABS.logTab), [
+    pathname,
+  ]);
 
-  const initActiveTab = useMemo(() => getActiveTab(), [getActiveTab]);
-
-  const [activeTab, setActiveTab] = useState(initActiveTab);
-
-  useEffect(() => {
-    const currentTab = getActiveTab();
-    setActiveTab(currentTab);
-  }, [getActiveTab]);
-
-  const onTabChange = (event, value) => {
-    if (value === TABS.chartTab) {
-      return history.push(ROUTES.ROUTE_CHART);
-    }
-    return history.push(ROUTES.ROUTE_LOG);
-  };
+  const onTabChange = (event, value) =>
+    value === TABS.chartTab ? history.push(ROUTES.ROUTE_CHART) : history.push(ROUTES.ROUTE_LOG);
 
   return (
     <Wrapper>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   Table as TaskTable,
   TableContainer,
@@ -8,6 +7,7 @@ import {
   TableBody,
   TableRow,
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 import { deleteTask } from '../../store/task';
 import { formatTime } from '../../utils/timeHelper';
@@ -23,7 +23,6 @@ const TABLE_HEADERS = ['№', 'Task name', 'Task start', 'Task end', 'Task spent
 const Table = () => {
   const [deleteTaskId, setDeleteTaskId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const history = useHistory();
   const { tasks } = useSelector((state) => state.task);
   const dispatch = useDispatch();
 
@@ -44,8 +43,6 @@ const Table = () => {
     setDeleteTaskId(null);
     setIsModalOpen(false);
   };
-
-  const onInfoClick = (taskId) => () => history.push(ROUTE_TASK.replace(':id', taskId));
 
   const onDeleteClick = (taskId) => () => openAlertModal(taskId);
 
@@ -74,7 +71,9 @@ const Table = () => {
                     {formatTime(task.timeEnded - task.timeStarted, false)}
                   </BodyTableCell>
                   <BodyTableCell>
-                    <Button onClick={onInfoClick(task.id)}>Info</Button>
+                    <Button component={Link} to={ROUTE_TASK.replace(':id', task.id)}>
+                      Info
+                    </Button>
                   </BodyTableCell>
                   <BodyTableCell>
                     <Button onClick={onDeleteClick(task.id)}>Delete</Button>
