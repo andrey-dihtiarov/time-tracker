@@ -85,10 +85,10 @@ const Table = () => {
         </TableContainer>
       )}
       <Modal
-        message="You are trying to close your task without a name, enter the title and try again!"
+        message="You are trying to delete the task! Are you sure you want to delete it?"
         isOpened={isModalOpen}
         onClose={onModalClose}
-        title="Empty task name"
+        title="Delete the task"
         onSuccess={onModalSuccess}
         showAgreementButton
       />
